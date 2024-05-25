@@ -49,6 +49,7 @@
                         </a>
                     </div>
                 </div>
+
                 <label for="check">
                     <input type="checkbox" id="check"/>
                     <span></span>
@@ -118,6 +119,35 @@
 
             </div>
         </section>
+    </div>
+    <div class="overlay" id="formOverlay">
+        <div class="form-container">
+            <h2>Форма для отправки</h2>
+            <form id="transportForm" method="POST" action="send_mail.php">
+                <label for="fio">ФИО</label>
+                <input type="text" id="fio" name="fio" required>
+
+                <label for="organization">Название организации (если есть)</label>
+                <input type="text" id="organization" name="organization">
+
+                <label for="phone">Номер телефона</label>
+                <input type="tel" id="phone" name="phone" pattern="\d*" maxlength="15" required>
+
+                <label for="date">Дата перевозки</label>
+                <input type="date" id="date" name="date" required>
+
+                <label for="description">Описание того, что нужно перевезти</label>
+                <textarea id="description" name="description" rows="4" required></textarea>
+
+                <button type="submit">Отправить</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="overlay" id="successOverlay">
+        <div class="success-message">
+            Заявка успешно отправлена!
+        </div>
     </div>
     <footer class="footer">
         <div class="overlay"></div>
