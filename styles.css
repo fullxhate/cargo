@@ -386,6 +386,10 @@ body {
     text-align: center;
     display: none;
 }
+.preloader-overlay, .preloader {
+    transition: opacity 0.5s ease;
+}
+
 .preloader-overlay {
     position: fixed;
     top: 0;
@@ -394,7 +398,8 @@ body {
     height: 100%;
     background-color: white;
     z-index: 9998;
-    display: none;
+    opacity: 1;
+    pointer-events: none; /* Позволяет щелчкам проходить сквозь оверлей */
 }
 
 .preloader {
@@ -403,9 +408,10 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 9999;
+    opacity: 1;
 }
 
 .preloader img {
-    width: 100px; /* Размер изображения */
+    width: 100px;
     height: auto;
 }

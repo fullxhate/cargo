@@ -92,27 +92,17 @@ $(document).ready(function() {
 
 
 document.addEventListener("DOMContentLoaded", function() {
-    // Находим элементы прелоадера и оверлея
-    var preloaderOverlay = document.querySelector('.preloader-overlay');
-    var preloader = document.querySelector('.preloader');
+    var preloaderOverlay = document.getElementById('preloader-overlay');
+    var preloader = document.getElementById('preloader');
 
-    // Задаем задержку в миллисекундах (1.5 секунды)
-    var delay = 1500;
+    var delay = 1000;
 
-    // Устанавливаем таймер для исчезновения прелоадера
     setTimeout(function() {
-        // Применяем анимацию для плавного исчезновения
-        preloaderOverlay.style.transition = 'opacity 0.5s ease';
-        preloader.style.transition = 'opacity 0.5s ease';
-
-        // Исчезновение прелоадера
         preloaderOverlay.style.opacity = 0;
         preloader.style.opacity = 0;
-
-        // После завершения анимации скрываем прелоадер
         setTimeout(function() {
             preloaderOverlay.style.display = 'none';
             preloader.style.display = 'none';
-        }, 500); // 0.5 секунды для анимации
+        }, 500);
     }, delay);
 });
