@@ -171,7 +171,8 @@ body {
     width: 100%;
     height: 100%;
     overflow-x: hidden;
-    margin-top: 100px;
+    margin-top: 80px;
+    margin-bottom: 40px;
 }
 .swiper-slide {
     align-items: center;
@@ -183,6 +184,9 @@ body {
 }
 .swiper-pagination {
     position: unset !important;
+}
+.footer {
+    padding: 10px 0;
 }
 .footer-inner {
     display: flex;
@@ -213,7 +217,9 @@ body {
     color: #fff;
 }
 
-
+label {
+    display: none;
+}
 
 @media (max-width: 600px) {
     .swiper-pagination {
