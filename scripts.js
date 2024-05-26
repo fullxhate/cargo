@@ -12,8 +12,8 @@ var swiper = new Swiper('.swiper-container', {
         prevEl: '.swiper-button-prev',
     },
     autoplay: {
-        delay: 2000, // Задержка между автоматической прокруткой в миллисекундах
-        disableOnInteraction: false, // Отключение автопрокрутки при взаимодействии пользователя с слайдером
+        delay: 2000,
+        disableOnInteraction: false,
     },
     breakpoints: {
         600: {
@@ -23,25 +23,50 @@ var swiper = new Swiper('.swiper-container', {
     },
     on: {
         init: function () {
-            var slides = this.slides;
+            var swiper = this;
+            var images = swiper.el.querySelectorAll('img');
+            var imagesLoaded = 0;
 
-            // Найти максимальную высоту изображений в слайдах
-            var maxHeight = 0;
-            slides.forEach(function (slide) {
-                var image = slide.querySelector('img');
-                if (image) {
-                    var imageHeight = image.clientHeight; // Высота изображения
-                    if (imageHeight > maxHeight) {
-                        maxHeight = imageHeight;
+            // Function to set image height after all images are loaded
+            function setImagesHeight() {
+                var maxHeight = 0;
+                swiper.slides.forEach(function (slide) {
+                    var image = slide.querySelector('img');
+                    if (image) {
+                        var imageHeight = image.clientHeight;
+                        if (imageHeight > maxHeight) {
+                            maxHeight = imageHeight;
+                        }
                     }
-                }
-            });
+                });
+                swiper.slides.forEach(function (slide) {
+                    var image = slide.querySelector('img');
+                    if (image) {
+                        image.style.height = maxHeight + 'px';
+                    }
+                });
+            }
 
-            // Установить максимальную высоту для всех изображений в слайдах
-            slides.forEach(function (slide) {
-                var image = slide.querySelector('img');
-                if (image) {
-                    image.style.height = maxHeight + 'px';
+            // Wait for all images to be loaded
+            images.forEach(function (image) {
+                if (image.complete) {
+                    imagesLoaded++;
+                    if (imagesLoaded === images.length) {
+                        setImagesHeight();
+                    }
+                } else {
+                    image.addEventListener('load', function () {
+                        imagesLoaded++;
+                        if (imagesLoaded === images.length) {
+                            setImagesHeight();
+                        }
+                    });
+                    image.addEventListener('error', function () {
+                        imagesLoaded++;
+                        if (imagesLoaded === images.length) {
+                            setImagesHeight();
+                        }
+                    });
                 }
             });
         }
@@ -61,7 +86,7 @@ document.getElementById('phone').addEventListener('input', function (e) {
     this.value = this.value.replace(/[^0-9]/g, '');
 });
 
-window.onclick = function(event) {
+window.addEventListener('click', function(event) {
     var formOverlay = document.getElementById('formOverlay');
     var successOverlay = document.getElementById('successOverlay');
     if (event.target == formOverlay) {
@@ -70,7 +95,18 @@ window.onclick = function(event) {
     if (event.target == successOverlay) {
         successOverlay.style.display = 'none';
     }
-}
+});
+
+window.addEventListener('touchstart', function(event) {
+    var formOverlay = document.getElementById('formOverlay');
+    var successOverlay = document.getElementById('successOverlay');
+    if (event.target == formOverlay) {
+        formOverlay.style.display = 'none';
+    }
+    if (event.target == successOverlay) {
+        successOverlay.style.display = 'none';
+    }
+});
 
 document.getElementById('transportForm').addEventListener('submit', function(event) {
     // Показываем сообщение об успешной отправке через 3 секунды
