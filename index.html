@@ -50,7 +50,7 @@
                         </a>
                     </div>
                     <div class="header-link">
-                        <a href="" class="header-link__order">
+                        <a href="" class="header-link__order" onclick="toggleOverlay()">
                             Подать заявку
                         </a>
                     </div>
@@ -172,12 +172,12 @@
                 <input type="tel" id="phone" name="phone" pattern="\d*" maxlength="15" required>
 
                 <label for="date">Дата перевозки</label>
-                <input type="date" id="date" name="date" required>
+                <input type="text" id="date" name="date" required>
 
                 <label for="description">Описание того, что нужно перевезти</label>
                 <textarea id="description" name="description" rows="4" required></textarea>
 
-                <button type="submit">Отправить</button>
+                <button type="submit" >Отправить</button>
             </form>
         </div>
     </div>
@@ -203,7 +203,7 @@
             </div>
         </div>
     </footer>
-    <div class="bottom-fix">
+    <div class="bottom-fix" id="bottomFix">
         <div class="bottom-fix__items">
             <div class="bottom-fix__item">
                 <a href="tel:+78123171760" class="bottom-fix__item-link">
