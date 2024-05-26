@@ -86,7 +86,7 @@ document.getElementById('phone').addEventListener('input', function (e) {
     this.value = this.value.replace(/[^0-9]/g, '');
 });
 
-window.addEventListener('click', function(event) {
+function closeOverlay(event) {
     var formOverlay = document.getElementById('formOverlay');
     var successOverlay = document.getElementById('successOverlay');
     if (event.target == formOverlay) {
@@ -95,29 +95,35 @@ window.addEventListener('click', function(event) {
     if (event.target == successOverlay) {
         successOverlay.style.display = 'none';
     }
-});
+}
 
-window.addEventListener('touchstart', function(event) {
-    var formOverlay = document.getElementById('formOverlay');
-    var successOverlay = document.getElementById('successOverlay');
-    if (event.target == formOverlay) {
-        formOverlay.style.display = 'none';
-    }
-    if (event.target == successOverlay) {
-        successOverlay.style.display = 'none';
-    }
-});
+function stopPropagation(event) {
+    event.stopPropagation();
+}
+
+document.getElementById('formOverlay').addEventListener('click', closeOverlay);
+document.getElementById('successOverlay').addEventListener('click', closeOverlay);
+document.getElementById('formOverlay').addEventListener('touchstart', closeOverlay);
+document.getElementById('successOverlay').addEventListener('touchstart', closeOverlay);
+
+document.querySelector('#formOverlay .form-container').addEventListener('click', stopPropagation);
+document.querySelector('#successOverlay .success-message').addEventListener('click', stopPropagation);
+document.querySelector('#formOverlay .form-container').addEventListener('touchstart', stopPropagation);
+document.querySelector('#successOverlay .success-message').addEventListener('touchstart', stopPropagation);
 
 document.getElementById('transportForm').addEventListener('submit', function(event) {
-    // Показываем сообщение об успешной отправке через 3 секунды
-    setTimeout(function() {
-        document.getElementById('successOverlay').style.display = 'flex';
-    }, 1000);
+    event.preventDefault(); // Предотвратить отправку формы для демонстрационных целей
 
-    // Скрыть сообщение через 3 секунды после показа
+    // Скрыть форму и оверлей формы
+    document.getElementById('formOverlay').style.display = 'none';
+
+    // Показать сообщение об успешной отправке
+    document.getElementById('successOverlay').style.display = 'flex';
+
+    // Скрыть сообщение об успешной отправке через 4 секунды
     setTimeout(function() {
         document.getElementById('successOverlay').style.display = 'none';
-    }, 4000);
+    }, 2000);
 });
 
 
@@ -141,4 +147,8 @@ document.addEventListener("DOMContentLoaded", function() {
             preloader.style.display = 'none';
         }, 500);
     }, delay);
+});
+
+flatpickr('#date', {
+    dateFormat: 'Y-m-d', // Формат даты
 });

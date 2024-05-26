@@ -376,7 +376,7 @@ body {
     background-color: #45a049;
 }
 .success-message {
-    background: #4CAF50;
+    background: darkolivegreen;
     color: white;
     padding: 20px;
     border-radius: 5px;
@@ -384,7 +384,6 @@ body {
     max-width: 300px;
     width: 100%;
     text-align: center;
-    display: none;
 }
 .preloader-overlay, .preloader {
     transition: opacity 0.5s ease;
