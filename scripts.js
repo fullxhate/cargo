@@ -88,57 +88,62 @@ document.getElementById('phone').addEventListener('input', function (e) {
     this.value = this.value.replace(/[^0-9]/g, '');
 });
 
-function closeOverlay(event) {
-    var formOverlay = document.getElementById('formOverlay');
-    var successOverlay = document.getElementById('successOverlay');
-    var target = event.target;
+document.addEventListener('DOMContentLoaded', function() {
+    function toggleOverlay(overlayId) {
+        var overlay = document.getElementById(overlayId);
+        overlay.style.display = (overlay.style.display === 'flex' || overlay.style.display === 'block') ? 'none' : 'flex';
+    }
 
-    // Закрываем оверлей
-    formOverlay.style.display = 'none';
-    successOverlay.style.display = 'none';
+    function closeOverlay(event) {
+        var formOverlay = document.getElementById('formOverlay');
+        var successOverlay = document.getElementById('successOverlay');
 
-    // Отключаем реакцию на клики для элементов под оверлеем
-    formOverlay.style.pointerEvents = 'none';
-    successOverlay.style.pointerEvents = 'none';
+        // Закрываем оверлей
+        formOverlay.style.display = 'none';
+        successOverlay.style.display = 'none';
 
-    // Устанавливаем таймер для включения реакции на клики после небольшой задержки
-    setTimeout(function() {
-        formOverlay.style.pointerEvents = 'auto';
-        successOverlay.style.pointerEvents = 'auto';
-    }, 100);
-}
+        // Отключаем реакцию на клики для элементов под оверлеем
+        formOverlay.style.pointerEvents = 'none';
+        successOverlay.style.pointerEvents = 'none';
 
-function stopPropagation(event) {
-    event.stopPropagation();
-}
+        // Устанавливаем таймер для включения реакции на клики после небольшой задержки
+        setTimeout(function() {
+            formOverlay.style.pointerEvents = 'auto';
+            successOverlay.style.pointerEvents = 'auto';
+        }, 100);
+    }
 
+    function stopPropagation(event) {
+        event.stopPropagation();
+    }
 
+    // Добавляем обработчики событий для закрытия оверлея при нажатии на кнопку и сам оверлей
+    document.getElementById('closeForm').addEventListener('click', closeOverlay);
+    document.getElementById('formOverlay').addEventListener('click', closeOverlay);
+    document.getElementById('successOverlay').addEventListener('click', closeOverlay);
 
+    // Предотвращаем распространение событий для элементов внутри оверлея
+    document.querySelector('#formOverlay .form-container').addEventListener('touchstart', stopPropagation);
+    document.querySelector('#successOverlay .success-message').addEventListener('touchstart', stopPropagation);
 
-document.getElementById('formOverlay').addEventListener('touchstart', closeOverlay);
-document.getElementById('successOverlay').addEventListener('touchstart', closeOverlay);
+    // Обработчик отправки формы
+    document.getElementById('transportForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // Предотвратить отправку формы для демонстрационных целей
 
+        // Скрыть форму и оверлей формы
+        document.getElementById('formOverlay').style.display = 'none';
 
+        // Показать сообщение об успешной отправке
+        document.getElementById('successOverlay').style.display = 'flex';
 
+        // Скрыть сообщение об успешной отправке через 2 секунды
+        setTimeout(function() {
+            document.getElementById('successOverlay').style.display = 'none';
+        }, 2000);
+    });
 
-
-document.querySelector('#formOverlay .form-container').addEventListener('touchstart', stopPropagation);
-document.querySelector('#successOverlay .success-message').addEventListener('touchstart', stopPropagation);
-
-// Обработчик отправки формы
-document.getElementById('transportForm').addEventListener('submit', function(event) {
-    event.preventDefault(); // Предотвратить отправку формы для демонстрационных целей
-
-    // Скрыть форму и оверлей формы
-    document.getElementById('formOverlay').style.display = 'none';
-
-    // Показать сообщение об успешной отправке
-    document.getElementById('successOverlay').style.display = 'flex';
-
-    // Скрыть сообщение об успешной отправке через 2 секунды
-    setTimeout(function() {
-        document.getElementById('successOverlay').style.display = 'none';
-    }, 2000);
+    // Экспортируем функцию toggleOverlay в глобальную область видимости
+    window.toggleOverlay = toggleOverlay;
 });
 
 
