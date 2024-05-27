@@ -1,5 +1,5 @@
 
-var swiper = new Swiper('.swiper-container', {
+var swiper1 = new Swiper('.swiper-container', {
     slidesPerView: 1,
     spaceBetween: 30,
     loop: true,
@@ -8,7 +8,6 @@ var swiper = new Swiper('.swiper-container', {
         clickable: true,
         dynamicBullets: 3,
     },
-
     navigation: {
         nextEl: '.swiper-button-next',
         prevEl: '.swiper-button-prev',
@@ -29,7 +28,6 @@ var swiper = new Swiper('.swiper-container', {
             var images = swiper.el.querySelectorAll('img');
             var imagesLoaded = 0;
 
-            // Function to set image height after all images are loaded
             function setImagesHeight() {
                 var maxHeight = 0;
                 swiper.slides.forEach(function (slide) {
@@ -49,7 +47,75 @@ var swiper = new Swiper('.swiper-container', {
                 });
             }
 
-            // Wait for all images to be loaded
+            images.forEach(function (image) {
+                if (image.complete) {
+                    imagesLoaded++;
+                    if (imagesLoaded === images.length) {
+                        setImagesHeight();
+                    }
+                } else {
+                    image.addEventListener('load', function () {
+                        imagesLoaded++;
+                        if (imagesLoaded === images.length) {
+                            setImagesHeight();
+                        }
+                    });
+                    image.addEventListener('error', function () {
+                        imagesLoaded++;
+                        if (imagesLoaded === images.length) {
+                            setImagesHeight();
+                        }
+                    });
+                }
+            });
+        }
+    }
+});
+
+var swiper2 = new Swiper('.swiper-container-1', {
+    slidesPerView: 1,
+    spaceBetween: 30,
+    loop: true,
+    pagination: {
+        el: '.swiper-pagination-1',
+        clickable: true,
+        dynamicBullets: 3,
+    },
+    autoplay: {
+        delay: 2000,
+        disableOnInteraction: false,
+    },
+    breakpoints: {
+        600: {
+            slidesPerView: 3,
+            spaceBetween: 10
+        }
+    },
+    on: {
+        init: function () {
+            var swiper = this;
+            var images = swiper.el.querySelectorAll('img');
+            var imagesLoaded = 0;
+
+            function setImagesHeight() {
+                var maxHeight = 0;
+                swiper.slides.forEach(function (slide) {
+                    var image = slide.querySelector('img');
+                    if (image) {
+                        var imageHeight = image.clientHeight;
+                        if (imageHeight > maxHeight) {
+                            maxHeight = imageHeight;
+                        }
+                    }
+                });
+                swiper.slides.forEach(function (slide) {
+                    var image = slide.querySelector('img');
+                    if (image) {
+                        image.style.height = maxHeight + 'px';
+                    }
+                });
+            }
+
             images.forEach(function (image) {
                 if (image.complete) {
                     imagesLoaded++;

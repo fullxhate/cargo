@@ -186,6 +186,9 @@ body {
     font-family: "Bebas Neue Bold" ,sans-serif;
     letter-spacing: 1px;
 }
+.portfolio-about {
+    margin-top: 15px;
+}
 
 .portfolio__items {
     display: flex;
@@ -236,6 +239,15 @@ body {
 .swiper-horizontal>.swiper-pagination-bullets .swiper-pagination-bullet, .swiper-pagination-horizontal.swiper-pagination-bullets .swiper-pagination-bullet {
     width: 30px;
     border-radius: unset;
+}
+.swiper-pagination {
+    top: 41% !important;
+}
+.swiper-pagination-1 {
+    top: 101% !important;
+}
+.swiper-pagination-1 {
+   position: absolute;
 }
 .swiper-pagination-bullet-active {
     background: darkolivegreen;
@@ -304,6 +316,7 @@ body {
         background: darkolivegreen;
         width: 60px !important;
     }
+
 
     .bottom-fix {
         display: block;
