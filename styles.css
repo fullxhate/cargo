@@ -324,10 +324,16 @@ body {
         display: block;
         position: fixed;
         width: 100%;
-        bottom: 0;
+        bottom: -200px;
         z-index: 10;
-        transition: transform 0.5s ease; /* Плавная анимация перемещения */
-        transform: translateY(0); /* Начальное положение: внизу экрана */
+
+        transform: translateY(0);
+        transition: bottom 0.5s ease-in-out, opacity 0.5s ease-in-out;
+        opacity: 0;
+    }
+    .bottom-fix.visible {
+        bottom: 0;
+        opacity: 1;
     }
     .bottom-fix__items {
         display: flex;

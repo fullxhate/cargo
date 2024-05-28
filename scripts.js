@@ -290,3 +290,32 @@ let showCard = (event) => {
 }
 
 btn.addEventListener("click", showCard);
+
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    const bottomFix = document.querySelector('.bottom-fix');
+    const textElement = document.querySelector('.text');
+    let isVisible = false;
+
+    function checkVisibility() {
+        const textRect = textElement.getBoundingClientRect();
+        const windowHeight = window.innerHeight;
+
+        if (textRect.top <= windowHeight && textRect.bottom >= 0) {
+            if (!isVisible) {
+                isVisible = true;
+                bottomFix.classList.add('visible');
+            }
+        } else {
+            if (isVisible) {
+                isVisible = false;
+                bottomFix.classList.remove('visible');
+            }
+        }
+    }
+
+    window.addEventListener('scroll', function() {
+        requestAnimationFrame(checkVisibility);
+    });
+});
