@@ -161,36 +161,38 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function closeOverlay(event) {
-        var formOverlay = document.getElementById('formOverlay');
-        var successOverlay = document.getElementById('successOverlay');
+        // Проверяем, что клик произошел именно на оверлее, а не на его содержимом
+        if (event.target === event.currentTarget) {
+            var formOverlay = document.getElementById('formOverlay');
+            var successOverlay = document.getElementById('successOverlay');
 
-        // Закрываем оверлей
-        formOverlay.style.display = 'none';
-        successOverlay.style.display = 'none';
-
-        // Отключаем реакцию на клики для элементов под оверлеем
-        formOverlay.style.pointerEvents = 'none';
-        successOverlay.style.pointerEvents = 'none';
-
-        // Устанавливаем таймер для включения реакции на клики после небольшой задержки
-        setTimeout(function() {
-            formOverlay.style.pointerEvents = 'auto';
-            successOverlay.style.pointerEvents = 'auto';
-        }, 100);
-    }
-
-    function stopPropagation(event) {
-        event.stopPropagation();
+            // Закрываем оверлей
+            formOverlay.style.display = 'none';
+            successOverlay.style.display = 'none';
+        }
     }
 
     // Добавляем обработчики событий для закрытия оверлея при нажатии на кнопку и сам оверлей
-    document.getElementById('closeForm').addEventListener('click', closeOverlay);
-    document.getElementById('formOverlay').addEventListener('click', closeOverlay);
-    document.getElementById('successOverlay').addEventListener('click', closeOverlay);
+    document.getElementById('closeForm').addEventListener('click', function(event) {
+        closeOverlay(event);
+    });
+
+    document.getElementById('formOverlay').addEventListener('click', function(event) {
+        closeOverlay(event);
+    });
+
+    document.getElementById('successOverlay').addEventListener('click', function(event) {
+        closeOverlay(event);
+    });
 
     // Предотвращаем распространение событий для элементов внутри оверлея
-    document.querySelector('#formOverlay .form-container').addEventListener('touchstart', stopPropagation);
-    document.querySelector('#successOverlay .success-message').addEventListener('touchstart', stopPropagation);
+    document.querySelector('#formOverlay .form-container').addEventListener('click', function(event) {
+        event.stopPropagation();
+    });
+
+    document.querySelector('#successOverlay .success-message').addEventListener('click', function(event) {
+        event.stopPropagation();
+    });
 
     // Обработчик отправки формы
     document.getElementById('transportForm').addEventListener('submit', function(event) {
@@ -211,6 +213,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Экспортируем функцию toggleOverlay в глобальную область видимости
     window.toggleOverlay = toggleOverlay;
 });
+
 
 
 
@@ -274,3 +277,16 @@ var observer = new MutationObserver(function(mutationsList, observer) {
 
 
 observer.observe(formOverlay, { attributes: true });
+
+
+const btn = document.querySelector("#btn");
+const item = document.querySelectorAll(".menu__item");
+
+let showCard = (event) => {
+    btn.classList.toggle("is-rotate");
+    for (var i = 0; i < item.length; i++) {
+        item[i].classList.toggle(`item-${i}`);
+    }
+}
+
+btn.addEventListener("click", showCard);
